@@ -14,7 +14,7 @@
 /**
  * Implements hook_preprocess_html().
  */
-function balk_preprocess_html(&$variables) {
+function syddjurs_preprocess_html(&$variables) {
   // Add conditional stylesheets for IE.
   drupal_add_css(path_to_theme() . '/css/style-ie7.css', array('group' => CSS_THEME, 'browsers' => array('IE' => 'lte IE 7', '!IE' => FALSE), 'preprocess' => FALSE));
 
@@ -30,7 +30,7 @@ function balk_preprocess_html(&$variables) {
 /**
  * Implements THEMENAME_alpha_process_HOOK().
  */
-function balk_alpha_process_region(&$variables) {
+function syddjurs_alpha_process_region(&$variables) {
   if (drupal_is_front_page() && $variables['region'] == 'content') {
     $variables['attributes'] = ' class="region region-content" id="region-content"';
   }
@@ -39,7 +39,7 @@ function balk_alpha_process_region(&$variables) {
 /**
  * Implements hook_page_alter().
  */
-function balk_page_alter(&$variables) {
+function syddjurs_page_alter(&$variables) {
   // Add the Kontakt block displayed on the right hand side.
   $variables['page_bottom']['ballerup_contact_block'] = array(
     '#type' => 'markup',
@@ -50,7 +50,7 @@ function balk_page_alter(&$variables) {
 /**
  * Implements hook_preprocess_page().
  */
-function balk_preprocess_page(&$variables) {
+function syddjurs_preprocess_page(&$variables) {
   // Hide the title if we are on a page managed by Panels (Page manager).
   if (module_exists('page_manager') && ($page_manager = page_manager_get_current_page())) {
     if ($page_manager['name'] != 'term_view') {
@@ -62,7 +62,7 @@ function balk_preprocess_page(&$variables) {
 /**
  * Implements hook_preprocess_node().
  */
-function balk_preprocess_node(&$variables) {
+function syddjurs_preprocess_node(&$variables) {
   // Create the $updated variable.
   $variables['updated'] = t('Last updated on !datetime', array('!datetime' => format_date($variables['changed'], 'custom', 'd M Y'), '!username' => $variables['name']));
   
@@ -73,7 +73,7 @@ function balk_preprocess_node(&$variables) {
 /**
  * Implements hook_preprocess_panels_pane().
  */
-function balk_preprocess_panels_pane(&$variables) {
+function syddjurs_preprocess_panels_pane(&$variables) {
   if ($variables['pane']->type == 'views' && $variables['pane']->subtype == 'activities') {
     $variables['theme_hook_suggestions'][] = 'panels_pane__activities_block';
   }
@@ -84,7 +84,7 @@ function balk_preprocess_panels_pane(&$variables) {
  *
  * Renders the main menu.
  */
-function balk_menu_link__menu_block__main_menu(&$variables) {
+function syddjurs_menu_link__menu_block__main_menu(&$variables) {
   $element = $variables['element'];
   $sub_menu = '';
   $description  = '';
@@ -108,7 +108,7 @@ function balk_menu_link__menu_block__main_menu(&$variables) {
   // Add jump menus for the main links.
   $jump_menus = NULL;
   if (in_array('l1', $element['#attributes']['class'])) {
-    $jump_menu = balk_get_jump_menus($element);
+    $jump_menu = syddjurs_get_jump_menus($element);
     if (!empty($jump_menu)) {
       $jump_menus = '<div class="main-menu-jump-menus">' . implode("\n", $jump_menu) . '</div>';
     }
@@ -128,7 +128,7 @@ function balk_menu_link__menu_block__main_menu(&$variables) {
  * Rewrites the URLs for Tema nodes to link to their external url or 'attached'
  * node for the Ballerup Taxonomy Term View.
  */
-function balk_views_view_field__ballerup_taxonomy_term__block_4__title($variables) {
+function syddjurs_views_view_field__ballerup_taxonomy_term__block_4__title($variables) {
   $view = $variables['view'];
   $field = $variables['field'];
   $row = $variables['row'];
@@ -155,7 +155,7 @@ function balk_views_view_field__ballerup_taxonomy_term__block_4__title($variable
  * Rewrites the URLs for Tema nodes to link to their external url or 'attached'
  * node for the Tema View.
  */
-function balk_views_view_field__campaigns__block_1__title($variables) {
+function syddjurs_views_view_field__campaigns__block_1__title($variables) {
   $view = $variables['view'];
   $field = $variables['field'];
   $row = $variables['row'];
@@ -175,7 +175,7 @@ function balk_views_view_field__campaigns__block_1__title($variables) {
 /**
  * Implements THEME_field__content_type().
  */
-function balk_field__right_column($variables) {
+function syddjurs_field__right_column($variables) {
   $output = '';
 
   // Render the label, if it's not hidden.
@@ -206,24 +206,24 @@ function balk_field__right_column($variables) {
  * @return array
  *   An array of jump menus for this menu item.
  */
-function balk_get_jump_menus($element) {
+function syddjurs_get_jump_menus($element) {
   $jump_menus = array();
 
   if (in_array('borger', $element['#attributes']['class'])) {
-//    $jump_menus[] = balk_block_render('jump', 'menu-menu-selvbetjening');
-    $jump_menus[] = balk_block_render('jump', 'menu-menu-borger-genveje');
+//    $jump_menus[] = syddjurs_block_render('jump', 'menu-menu-selvbetjening');
+    $jump_menus[] = syddjurs_block_render('jump', 'menu-menu-borger-genveje');
   }
   elseif (in_array('kommunen', $element['#attributes']['class'])) {
-    $jump_menus[] = balk_block_render('jump', 'menu-menu-erhverv-genveje');
+    $jump_menus[] = syddjurs_block_render('jump', 'menu-menu-erhverv-genveje');
   }
   elseif (in_array('erhverv', $element['#attributes']['class'])) {
-    $jump_menus[] = balk_block_render('jump', 'menu-menu-erhverv-genveje2');
+    $jump_menus[] = syddjurs_block_render('jump', 'menu-menu-erhverv-genveje2');
   }
   elseif (in_array('netsteder', $element['#attributes']['class'])) {
-    $jump_menus[] = balk_block_render('jump', 'menu-menu-plejecenter');
-    $jump_menus[] = balk_block_render('jump', 'menu-menu-botilbud');
-    $jump_menus[] = balk_block_render('jump', 'menu-menu-bfo');
-    $jump_menus[] = balk_block_render('jump', 'menu-menu-andre-netsteder');
+    $jump_menus[] = syddjurs_block_render('jump', 'menu-menu-plejecenter');
+    $jump_menus[] = syddjurs_block_render('jump', 'menu-menu-botilbud');
+    $jump_menus[] = syddjurs_block_render('jump', 'menu-menu-bfo');
+    $jump_menus[] = syddjurs_block_render('jump', 'menu-menu-andre-netsteder');
   }
 
   return $jump_menus;
@@ -232,7 +232,7 @@ function balk_get_jump_menus($element) {
 /**
  * Utility function for embedding a block in code.
  */
-function balk_block_render($module, $block_id) {
+function syddjurs_block_render($module, $block_id) {
   $block = block_load($module, $block_id);
   $block_content = _block_render_blocks(array($block));
   $build = _block_get_renderable_array($block_content);
@@ -244,7 +244,7 @@ function balk_block_render($module, $block_id) {
 /**
  * Implements template_preprocess_views_view_row_rss().
  */
-function balk_preprocess_views_view_row_rss(&$variables) {
+function syddjurs_preprocess_views_view_row_rss(&$variables) {
   $item = &$variables['row'];
   foreach ($item->elements as $key => &$element) {
     if ($element['key'] == 'dc:creator' || $element['key'] == 'comments') {

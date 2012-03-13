@@ -1,3 +1,3 @@
-<div<?php print $attributes; ?>>
+  <div<?php print $attributes; ?>>
   <?php print $content; ?>
-</div>
+  </div>
